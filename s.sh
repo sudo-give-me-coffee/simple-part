@@ -16,7 +16,7 @@ function format-partition(){
     return ${?}
   }
   
-  echo y | mkfs.${2}" ${device}${1}
+  echo y | mkfs.${2} ${device}${1}
   return ${?}
 }
 
