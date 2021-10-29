@@ -26,7 +26,7 @@ function delete-partition() {
 }
 
 function create-partition(){
-  partition_size=$(echo "(${2}*${disk_size_sectors})/${disk_size_gigabytes}")
+  partition_size=$(echo "(${2}*${disk_size_sectors})/${disk_size_gigabytes}"|bc)
   
   echo "n
         ${1}
