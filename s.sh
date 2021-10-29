@@ -48,7 +48,7 @@ disk_size_sectors=$(echo "p" | fdisk "${device}" | grep -o "bytes.*sectors$" | c
 [ "${1}" = "--erase-partition-table" ] && {
   erase-diskpartition-table
   shift
-  partprobre "${device}"
+  partprobe "${device}"
 }
 
 for arg in "${@}"; do
