@@ -45,8 +45,9 @@ function create-partition(){
 }
 
 device=$(echo "${1}" | cut -c 10-); shift
-[ ! -f "${device}" ] && {
+[ ! -b "${device}" ] && {
   echo "Fatal error: '${device}' not found"
+  exit 1
 }
 
 disk_size_bytes=$(echo "p" | fdisk "${device}" | grep -o ",.*bytes" | cut -d' ' -f2)
@@ -87,7 +88,7 @@ for arg in "${@}"; do
 done
 
 
-[ -f "${target_partition}" ] && {
+[ -b "${target_partition}" ] && {
   mkdir -p /target
   mount -o rw "${target_partition}"  /target
 }
