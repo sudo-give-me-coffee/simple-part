@@ -16,8 +16,10 @@ function format-partition(){
     return ${?}
   }
   
-  echo y | mkfs."${2}" "${device}""${1}"
-  return ${?}
+  [ -f "/sbin/mkfs.${2}" ] && {
+    echo y | mkfs."${2}" "${device}""${1}"
+    return ${?}
+  }
 }
 
 function delete-partition() {
