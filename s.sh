@@ -28,12 +28,20 @@ function delete-partition() {
 function create-partition(){
   partition_size=$(echo "(${2}*${disk_size_sectors})/${disk_size_gigabytes}"|bc)
   
+  last_partition_end_sector=$(echo p | fdisk "${device}" | grep ^/dev/ | tail -n1 | tr -s ' ' | cut -d' ' -f3 )
+  
+  [ ! -z "${last_partition_end_sector}" ] && {
+    partition_size=$(echo ${last_partition_end_sector}+${partition_size}|bc)
+  }
+  
   echo "n
         ${1}
         
         ${partition_size}
         y
         w" | fdisk "${device}"
+        
+  format-partition ${1} ${3}
 }
 
 device=$(echo "${1}" | cut -c 10-); shift
